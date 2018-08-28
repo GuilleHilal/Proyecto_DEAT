@@ -1,1 +1,4 @@
-Cada actualización debera ser realizada al final del Sprint Review correspondiente.
+Realizaremos cada actualización de la Linea Base poco antes de finalizar la iteración del Sprint
+en su respectivo Sprint Review (revición de Sprint), donde detectaremos que items de configuración 
+ya están completos y validados para formar parte de la linea base.
+[Nota: Cada entrega de TP será considerada un Sprint distinto]
