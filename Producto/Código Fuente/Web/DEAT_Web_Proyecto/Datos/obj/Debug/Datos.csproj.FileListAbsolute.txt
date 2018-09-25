@@ -1,0 +1,12 @@
+c:\users\ignacio\source\repos\DeliveryEat\Datos\bin\Debug\Datos.dll.config
+c:\users\ignacio\source\repos\DeliveryEat\Datos\bin\Debug\Datos.dll
+c:\users\ignacio\source\repos\DeliveryEat\Datos\bin\Debug\Datos.pdb
+c:\users\ignacio\source\repos\DeliveryEat\Datos\bin\Debug\EntityFramework.dll
+c:\users\ignacio\source\repos\DeliveryEat\Datos\bin\Debug\EntityFramework.SqlServer.dll
+c:\users\ignacio\source\repos\DeliveryEat\Datos\bin\Debug\EntityFramework.xml
+c:\users\ignacio\source\repos\DeliveryEat\Datos\bin\Debug\EntityFramework.SqlServer.xml
+c:\users\ignacio\source\repos\DeliveryEat\Datos\obj\Debug\Datos.csproj.CoreCompileInputs.cache
+c:\users\ignacio\source\repos\DeliveryEat\Datos\obj\Debug\Datos.csproj.CopyComplete
+c:\users\ignacio\source\repos\DeliveryEat\Datos\obj\Debug\Datos.dll
+c:\users\ignacio\source\repos\DeliveryEat\Datos\obj\Debug\Datos.pdb
+c:\users\ignacio\source\repos\DeliveryEat\Datos\obj\Debug\Datos.csprojResolveAssemblyReference.cache

@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DeliverEatModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Compras">
+    <Key>
+      <PropertyRef Name="idPedido" />
+    </Key>
+    <Property Name="idPedido" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="total" Type="float" />
+    <Property Name="fechaHora" Type="datetime" />
+    <Property Name="nombre" Type="varchar" MaxLength="20" />
+    <Property Name="apellido" Type="varchar" MaxLength="20" />
+    <Property Name="email" Type="varchar" MaxLength="50" />
+    <Property Name="barrio" Type="varchar" MaxLength="50" />
+    <Property Name="direccion" Type="varchar" MaxLength="100" />
+    <Property Name="numero" Type="int" />
+    <Property Name="depto" Type="bit" />
+    <Property Name="piso" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="DetalleCompra">
+    <Key>
+      <PropertyRef Name="idPedido" />
+      <PropertyRef Name="idProducto" />
+      <PropertyRef Name="idComercio" />
+    </Key>
+    <Property Name="idPedido" Type="int" Nullable="false" />
+    <Property Name="idProducto" Type="int" Nullable="false" />
+    <Property Name="idComercio" Type="int" Nullable="false" />
+    <Property Name="precioUnitario" Type="float" />
+    <Property Name="cantidad" Type="int" />
+  </EntityType>
+  <EntityType Name="Entregas">
+    <Key>
+      <PropertyRef Name="idPedido" />
+      <PropertyRef Name="idTipoEntrega" />
+    </Key>
+    <Property Name="idPedido" Type="int" Nullable="false" />
+    <Property Name="idTipoEntrega" Type="int" Nullable="false" />
+    <Property Name="horaEntrega" Type="time" Precision="7" />
+  </EntityType>
+  <EntityType Name="PagoPedido">
+    <Key>
+      <PropertyRef Name="idTipoPago" />
+      <PropertyRef Name="idPedido" />
+    </Key>
+    <Property Name="idTipoPago" Type="int" Nullable="false" />
+    <Property Name="idPedido" Type="int" Nullable="false" />
+    <Property Name="monto" Type="float" />
+  </EntityType>
+  <EntityType Name="TipoEntrega">
+    <Key>
+      <PropertyRef Name="idTipoEntrega" />
+    </Key>
+    <Property Name="idTipoEntrega" Type="int" Nullable="false" />
+    <Property Name="descripcion" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="TipoPago">
+    <Key>
+      <PropertyRef Name="idTipoPago" />
+    </Key>
+    <Property Name="idTipoPago" Type="int" Nullable="false" />
+    <Property Name="descripcion" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <Association Name="FK">
+    <End Role="Compras" Type="Self.Compras" Multiplicity="1" />
+    <End Role="DetalleCompra" Type="Self.DetalleCompra" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Compras">
+        <PropertyRef Name="idPedido" />
+      </Principal>
+      <Dependent Role="DetalleCompra">
+        <PropertyRef Name="idPedido" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Compras">
+    <End Role="Compras" Type="Self.Compras" Multiplicity="1" />
+    <End Role="Entregas" Type="Self.Entregas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Compras">
+        <PropertyRef Name="idPedido" />
+      </Principal>
+      <Dependent Role="Entregas">
+        <PropertyRef Name="idPedido" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EntregasTipoEntregas">
+    <End Role="TipoEntrega" Type="Self.TipoEntrega" Multiplicity="1" />
+    <End Role="Entregas" Type="Self.Entregas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TipoEntrega">
+        <PropertyRef Name="idTipoEntrega" />
+      </Principal>
+      <Dependent Role="Entregas">
+        <PropertyRef Name="idTipoEntrega" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK312312312323">
+    <End Role="Compras" Type="Self.Compras" Multiplicity="1" />
+    <End Role="Entregas" Type="Self.Entregas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Compras">
+        <PropertyRef Name="idPedido" />
+      </Principal>
+      <Dependent Role="Entregas">
+        <PropertyRef Name="idPedido" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK321323">
+    <End Role="Compras" Type="Self.Compras" Multiplicity="1" />
+    <End Role="PagoPedido" Type="Self.PagoPedido" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Compras">
+        <PropertyRef Name="idPedido" />
+      </Principal>
+      <Dependent Role="PagoPedido">
+        <PropertyRef Name="idPedido" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DeliverEatModelStoreContainer">
+    <EntitySet Name="Compras" EntityType="Self.Compras" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DetalleCompra" EntityType="Self.DetalleCompra" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Entregas" EntityType="Self.Entregas" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PagoPedido" EntityType="Self.PagoPedido" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TipoEntrega" EntityType="Self.TipoEntrega" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TipoPago" EntityType="Self.TipoPago" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK" Association="Self.FK">
+      <End Role="Compras" EntitySet="Compras" />
+      <End Role="DetalleCompra" EntitySet="DetalleCompra" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Compras" Association="Self.FK_Compras">
+      <End Role="Compras" EntitySet="Compras" />
+      <End Role="Entregas" EntitySet="Entregas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EntregasTipoEntregas" Association="Self.FK_EntregasTipoEntregas">
+      <End Role="TipoEntrega" EntitySet="TipoEntrega" />
+      <End Role="Entregas" EntitySet="Entregas" />
+    </AssociationSet>
+    <AssociationSet Name="FK312312312323" Association="Self.FK312312312323">
+      <End Role="Compras" EntitySet="Compras" />
+      <End Role="Entregas" EntitySet="Entregas" />
+    </AssociationSet>
+    <AssociationSet Name="FK321323" Association="Self.FK321323">
+      <End Role="Compras" EntitySet="Compras" />
+      <End Role="PagoPedido" EntitySet="PagoPedido" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

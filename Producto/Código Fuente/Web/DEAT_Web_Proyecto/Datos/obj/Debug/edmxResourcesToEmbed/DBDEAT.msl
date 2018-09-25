@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DeliverEatModelStoreContainer" CdmEntityContainer="DeliverEatEntities">
+    <EntitySetMapping Name="Compras">
+      <EntityTypeMapping TypeName="DeliverEatModel.Compra">
+        <MappingFragment StoreEntitySet="Compras">
+          <ScalarProperty Name="idPedido" ColumnName="idPedido" />
+          <ScalarProperty Name="total" ColumnName="total" />
+          <ScalarProperty Name="fechaHora" ColumnName="fechaHora" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="apellido" ColumnName="apellido" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="barrio" ColumnName="barrio" />
+          <ScalarProperty Name="direccion" ColumnName="direccion" />
+          <ScalarProperty Name="numero" ColumnName="numero" />
+          <ScalarProperty Name="depto" ColumnName="depto" />
+          <ScalarProperty Name="piso" ColumnName="piso" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DetalleCompras">
+      <EntityTypeMapping TypeName="DeliverEatModel.DetalleCompra">
+        <MappingFragment StoreEntitySet="DetalleCompra">
+          <ScalarProperty Name="idPedido" ColumnName="idPedido" />
+          <ScalarProperty Name="idProducto" ColumnName="idProducto" />
+          <ScalarProperty Name="idComercio" ColumnName="idComercio" />
+          <ScalarProperty Name="precioUnitario" ColumnName="precioUnitario" />
+          <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Entregas">
+      <EntityTypeMapping TypeName="DeliverEatModel.Entrega">
+        <MappingFragment StoreEntitySet="Entregas">
+          <ScalarProperty Name="idPedido" ColumnName="idPedido" />
+          <ScalarProperty Name="idTipoEntrega" ColumnName="idTipoEntrega" />
+          <ScalarProperty Name="horaEntrega" ColumnName="horaEntrega" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PagoPedidoes">
+      <EntityTypeMapping TypeName="DeliverEatModel.PagoPedido">
+        <MappingFragment StoreEntitySet="PagoPedido">
+          <ScalarProperty Name="idTipoPago" ColumnName="idTipoPago" />
+          <ScalarProperty Name="idPedido" ColumnName="idPedido" />
+          <ScalarProperty Name="monto" ColumnName="monto" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TipoEntregas">
+      <EntityTypeMapping TypeName="DeliverEatModel.TipoEntrega">
+        <MappingFragment StoreEntitySet="TipoEntrega">
+          <ScalarProperty Name="idTipoEntrega" ColumnName="idTipoEntrega" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TipoPagoes">
+      <EntityTypeMapping TypeName="DeliverEatModel.TipoPago">
+        <MappingFragment StoreEntitySet="TipoPago">
+          <ScalarProperty Name="idTipoPago" ColumnName="idTipoPago" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
