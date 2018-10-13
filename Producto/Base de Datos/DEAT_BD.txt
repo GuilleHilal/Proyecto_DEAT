@@ -1,0 +1,159 @@
+USE [DeliverEat]
+GO
+/****** Object:  Table [dbo].[Compras]    Script Date: 09/24/2018 23:34:25 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Compras](
+	[idPedido] [int] IDENTITY(1,1) NOT NULL,
+	[total] [float] NULL,
+	[fechaHora] [datetime] NULL,
+	[nombre] [varchar](20) NULL,
+	[apellido] [varchar](20) NULL,
+	[email] [varchar](50) NULL,
+	[barrio] [varchar](50) NULL,
+	[direccion] [varchar](100) NULL,
+	[numero] [int] NULL,
+	[depto] [bit] NULL,
+	[piso] [varchar](20) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[idPedido] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[TipoPago]    Script Date: 09/24/2018 23:34:25 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[TipoPago](
+	[idTipoPago] [int] NOT NULL,
+	[descripcion] [varchar](20) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[idTipoPago] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[TipoEntrega]    Script Date: 09/24/2018 23:34:25 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[TipoEntrega](
+	[idTipoEntrega] [int] NOT NULL,
+	[descripcion] [varchar](50) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[idTipoEntrega] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[PagoPedido]    Script Date: 09/24/2018 23:34:25 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PagoPedido](
+	[idTipoPago] [int] NOT NULL,
+	[idPedido] [int] NOT NULL,
+	[monto] [float] NULL,
+ CONSTRAINT [PK] PRIMARY KEY CLUSTERED 
+(
+	[idTipoPago] ASC,
+	[idPedido] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Entregas]    Script Date: 09/24/2018 23:34:25 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Entregas](
+	[idPedido] [int] NOT NULL,
+	[idTipoEntrega] [int] NOT NULL,
+	[horaEntrega] [varchar](10) NULL,
+ CONSTRAINT [PK_ClavePrimariaEntregas] PRIMARY KEY CLUSTERED 
+(
+	[idPedido] ASC,
+	[idTipoEntrega] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[DetalleCompra]    Script Date: 09/24/2018 23:34:25 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[DetalleCompra](
+	[idPedido] [int] NOT NULL,
+	[idProducto] [int] NOT NULL,
+	[idComercio] [int] NOT NULL,
+	[precioUnitario] [float] NULL,
+	[cantidad] [int] NULL,
+ CONSTRAINT [ClavePrimariaDetalleCOmpra] PRIMARY KEY CLUSTERED 
+(
+	[idPedido] ASC,
+	[idProducto] ASC,
+	[idComercio] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Default [DF__Compras__fechaHo__1A14E395]    Script Date: 09/24/2018 23:34:25 ******/
+ALTER TABLE [dbo].[Compras] ADD  DEFAULT (getdate()) FOR [fechaHora]
+GO
+/****** Object:  ForeignKey [FK]    Script Date: 09/24/2018 23:34:25 ******/
+ALTER TABLE [dbo].[DetalleCompra]  WITH CHECK ADD  CONSTRAINT [FK] FOREIGN KEY([idPedido])
+REFERENCES [dbo].[Compras] ([idPedido])
+GO
+ALTER TABLE [dbo].[DetalleCompra] CHECK CONSTRAINT [FK]
+GO
+/****** Object:  ForeignKey [FK_Compras]    Script Date: 09/24/2018 23:34:25 ******/
+ALTER TABLE [dbo].[Entregas]  WITH CHECK ADD  CONSTRAINT [FK_Compras] FOREIGN KEY([idPedido])
+REFERENCES [dbo].[Compras] ([idPedido])
+GO
+ALTER TABLE [dbo].[Entregas] CHECK CONSTRAINT [FK_Compras]
+GO
+/****** Object:  ForeignKey [FK_EntregasTipoEntregas]    Script Date: 09/24/2018 23:34:25 ******/
+ALTER TABLE [dbo].[Entregas]  WITH CHECK ADD  CONSTRAINT [FK_EntregasTipoEntregas] FOREIGN KEY([idTipoEntrega])
+REFERENCES [dbo].[TipoEntrega] ([idTipoEntrega])
+GO
+ALTER TABLE [dbo].[Entregas] CHECK CONSTRAINT [FK_EntregasTipoEntregas]
+GO
+/****** Object:  ForeignKey [FK312312312323]    Script Date: 09/24/2018 23:34:25 ******/
+ALTER TABLE [dbo].[Entregas]  WITH CHECK ADD  CONSTRAINT [FK312312312323] FOREIGN KEY([idPedido])
+REFERENCES [dbo].[Compras] ([idPedido])
+GO
+ALTER TABLE [dbo].[Entregas] CHECK CONSTRAINT [FK312312312323]
+GO
+/****** Object:  ForeignKey [FK321323]    Script Date: 09/24/2018 23:34:25 ******/
+ALTER TABLE [dbo].[PagoPedido]  WITH CHECK ADD  CONSTRAINT [FK321323] FOREIGN KEY([idPedido])
+REFERENCES [dbo].[Compras] ([idPedido])
+GO
+ALTER TABLE [dbo].[PagoPedido] CHECK CONSTRAINT [FK321323]
+GO
+
+INSERT INTO TipoPago VALUES (1, 'Efectivo')
+INSERT INTO TipoPago VALUES (2, 'Credito VISA')
+
+INSERT INTO TipoPago VALUES (1, 'Lo antes posible')
+INSERT INTO TipoPago VALUES (2, 'Hora seleccionada por cliente')

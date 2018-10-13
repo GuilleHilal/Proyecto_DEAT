@@ -1,0 +1,410 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DeliverEatModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Compras">
+          <Key>
+            <PropertyRef Name="idPedido" />
+          </Key>
+          <Property Name="idPedido" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="total" Type="float" />
+          <Property Name="fechaHora" Type="datetime" />
+          <Property Name="nombre" Type="varchar" MaxLength="20" />
+          <Property Name="apellido" Type="varchar" MaxLength="20" />
+          <Property Name="email" Type="varchar" MaxLength="50" />
+          <Property Name="barrio" Type="varchar" MaxLength="50" />
+          <Property Name="direccion" Type="varchar" MaxLength="100" />
+          <Property Name="numero" Type="int" />
+          <Property Name="depto" Type="bit" />
+          <Property Name="piso" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="DetalleCompra">
+          <Key>
+            <PropertyRef Name="idPedido" />
+            <PropertyRef Name="idProducto" />
+            <PropertyRef Name="idComercio" />
+          </Key>
+          <Property Name="idPedido" Type="int" Nullable="false" />
+          <Property Name="idProducto" Type="int" Nullable="false" />
+          <Property Name="idComercio" Type="int" Nullable="false" />
+          <Property Name="precioUnitario" Type="float" />
+          <Property Name="cantidad" Type="int" />
+        </EntityType>
+        <EntityType Name="Entregas">
+          <Key>
+            <PropertyRef Name="idPedido" />
+            <PropertyRef Name="idTipoEntrega" />
+          </Key>
+          <Property Name="idPedido" Type="int" Nullable="false" />
+          <Property Name="idTipoEntrega" Type="int" Nullable="false" />
+          <Property Name="horaEntrega" Type="time" Precision="7" />
+        </EntityType>
+        <EntityType Name="PagoPedido">
+          <Key>
+            <PropertyRef Name="idTipoPago" />
+            <PropertyRef Name="idPedido" />
+          </Key>
+          <Property Name="idTipoPago" Type="int" Nullable="false" />
+          <Property Name="idPedido" Type="int" Nullable="false" />
+          <Property Name="monto" Type="float" />
+        </EntityType>
+        <EntityType Name="TipoEntrega">
+          <Key>
+            <PropertyRef Name="idTipoEntrega" />
+          </Key>
+          <Property Name="idTipoEntrega" Type="int" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TipoPago">
+          <Key>
+            <PropertyRef Name="idTipoPago" />
+          </Key>
+          <Property Name="idTipoPago" Type="int" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <Association Name="FK">
+          <End Role="Compras" Type="Self.Compras" Multiplicity="1" />
+          <End Role="DetalleCompra" Type="Self.DetalleCompra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Compras">
+              <PropertyRef Name="idPedido" />
+            </Principal>
+            <Dependent Role="DetalleCompra">
+              <PropertyRef Name="idPedido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Compras">
+          <End Role="Compras" Type="Self.Compras" Multiplicity="1" />
+          <End Role="Entregas" Type="Self.Entregas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Compras">
+              <PropertyRef Name="idPedido" />
+            </Principal>
+            <Dependent Role="Entregas">
+              <PropertyRef Name="idPedido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EntregasTipoEntregas">
+          <End Role="TipoEntrega" Type="Self.TipoEntrega" Multiplicity="1" />
+          <End Role="Entregas" Type="Self.Entregas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoEntrega">
+              <PropertyRef Name="idTipoEntrega" />
+            </Principal>
+            <Dependent Role="Entregas">
+              <PropertyRef Name="idTipoEntrega" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK312312312323">
+          <End Role="Compras" Type="Self.Compras" Multiplicity="1" />
+          <End Role="Entregas" Type="Self.Entregas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Compras">
+              <PropertyRef Name="idPedido" />
+            </Principal>
+            <Dependent Role="Entregas">
+              <PropertyRef Name="idPedido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK321323">
+          <End Role="Compras" Type="Self.Compras" Multiplicity="1" />
+          <End Role="PagoPedido" Type="Self.PagoPedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Compras">
+              <PropertyRef Name="idPedido" />
+            </Principal>
+            <Dependent Role="PagoPedido">
+              <PropertyRef Name="idPedido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DeliverEatModelStoreContainer">
+          <EntitySet Name="Compras" EntityType="Self.Compras" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DetalleCompra" EntityType="Self.DetalleCompra" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Entregas" EntityType="Self.Entregas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PagoPedido" EntityType="Self.PagoPedido" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoEntrega" EntityType="Self.TipoEntrega" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoPago" EntityType="Self.TipoPago" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK" Association="Self.FK">
+            <End Role="Compras" EntitySet="Compras" />
+            <End Role="DetalleCompra" EntitySet="DetalleCompra" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Compras" Association="Self.FK_Compras">
+            <End Role="Compras" EntitySet="Compras" />
+            <End Role="Entregas" EntitySet="Entregas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EntregasTipoEntregas" Association="Self.FK_EntregasTipoEntregas">
+            <End Role="TipoEntrega" EntitySet="TipoEntrega" />
+            <End Role="Entregas" EntitySet="Entregas" />
+          </AssociationSet>
+          <AssociationSet Name="FK312312312323" Association="Self.FK312312312323">
+            <End Role="Compras" EntitySet="Compras" />
+            <End Role="Entregas" EntitySet="Entregas" />
+          </AssociationSet>
+          <AssociationSet Name="FK321323" Association="Self.FK321323">
+            <End Role="Compras" EntitySet="Compras" />
+            <End Role="PagoPedido" EntitySet="PagoPedido" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DeliverEatModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Compra">
+          <Key>
+            <PropertyRef Name="idPedido" />
+          </Key>
+          <Property Name="idPedido" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="total" Type="Double" />
+          <Property Name="fechaHora" Type="DateTime" Precision="3" />
+          <Property Name="nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="apellido" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="barrio" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="numero" Type="Int32" />
+          <Property Name="depto" Type="Boolean" />
+          <Property Name="piso" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="DetalleCompras" Relationship="Self.FK" FromRole="Compras" ToRole="DetalleCompra" />
+          <NavigationProperty Name="Entregas" Relationship="Self.FK_Compras" FromRole="Compras" ToRole="Entregas" />
+          <NavigationProperty Name="Entregas1" Relationship="Self.FK312312312323" FromRole="Compras" ToRole="Entregas" />
+          <NavigationProperty Name="PagoPedidoes" Relationship="Self.FK321323" FromRole="Compras" ToRole="PagoPedido" />
+        </EntityType>
+        <EntityType Name="DetalleCompra">
+          <Key>
+            <PropertyRef Name="idPedido" />
+            <PropertyRef Name="idProducto" />
+            <PropertyRef Name="idComercio" />
+          </Key>
+          <Property Name="idPedido" Type="Int32" Nullable="false" />
+          <Property Name="idProducto" Type="Int32" Nullable="false" />
+          <Property Name="idComercio" Type="Int32" Nullable="false" />
+          <Property Name="precioUnitario" Type="Double" />
+          <Property Name="cantidad" Type="Int32" />
+          <NavigationProperty Name="Compra" Relationship="Self.FK" FromRole="DetalleCompra" ToRole="Compras" />
+        </EntityType>
+        <EntityType Name="Entrega">
+          <Key>
+            <PropertyRef Name="idPedido" />
+            <PropertyRef Name="idTipoEntrega" />
+          </Key>
+          <Property Name="idPedido" Type="Int32" Nullable="false" />
+          <Property Name="idTipoEntrega" Type="Int32" Nullable="false" />
+          <Property Name="horaEntrega" Type="Time" Precision="7" />
+          <NavigationProperty Name="Compra" Relationship="Self.FK_Compras" FromRole="Entregas" ToRole="Compras" />
+          <NavigationProperty Name="Compra1" Relationship="Self.FK312312312323" FromRole="Entregas" ToRole="Compras" />
+          <NavigationProperty Name="TipoEntrega" Relationship="Self.FK_EntregasTipoEntregas" FromRole="Entregas" ToRole="TipoEntrega" />
+        </EntityType>
+        <EntityType Name="PagoPedido">
+          <Key>
+            <PropertyRef Name="idTipoPago" />
+            <PropertyRef Name="idPedido" />
+          </Key>
+          <Property Name="idTipoPago" Type="Int32" Nullable="false" />
+          <Property Name="idPedido" Type="Int32" Nullable="false" />
+          <Property Name="monto" Type="Double" />
+          <NavigationProperty Name="Compra" Relationship="Self.FK321323" FromRole="PagoPedido" ToRole="Compras" />
+        </EntityType>
+        <EntityType Name="TipoEntrega">
+          <Key>
+            <PropertyRef Name="idTipoEntrega" />
+          </Key>
+          <Property Name="idTipoEntrega" Type="Int32" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Entregas" Relationship="Self.FK_EntregasTipoEntregas" FromRole="TipoEntrega" ToRole="Entregas" />
+        </EntityType>
+        <EntityType Name="TipoPago">
+          <Key>
+            <PropertyRef Name="idTipoPago" />
+          </Key>
+          <Property Name="idTipoPago" Type="Int32" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK">
+          <End Role="Compras" Type="Self.Compra" Multiplicity="1" />
+          <End Role="DetalleCompra" Type="Self.DetalleCompra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Compras">
+              <PropertyRef Name="idPedido" />
+            </Principal>
+            <Dependent Role="DetalleCompra">
+              <PropertyRef Name="idPedido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Compras">
+          <End Role="Compras" Type="Self.Compra" Multiplicity="1" />
+          <End Role="Entregas" Type="Self.Entrega" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Compras">
+              <PropertyRef Name="idPedido" />
+            </Principal>
+            <Dependent Role="Entregas">
+              <PropertyRef Name="idPedido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK312312312323">
+          <End Role="Compras" Type="Self.Compra" Multiplicity="1" />
+          <End Role="Entregas" Type="Self.Entrega" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Compras">
+              <PropertyRef Name="idPedido" />
+            </Principal>
+            <Dependent Role="Entregas">
+              <PropertyRef Name="idPedido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK321323">
+          <End Role="Compras" Type="Self.Compra" Multiplicity="1" />
+          <End Role="PagoPedido" Type="Self.PagoPedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Compras">
+              <PropertyRef Name="idPedido" />
+            </Principal>
+            <Dependent Role="PagoPedido">
+              <PropertyRef Name="idPedido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EntregasTipoEntregas">
+          <End Role="TipoEntrega" Type="Self.TipoEntrega" Multiplicity="1" />
+          <End Role="Entregas" Type="Self.Entrega" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoEntrega">
+              <PropertyRef Name="idTipoEntrega" />
+            </Principal>
+            <Dependent Role="Entregas">
+              <PropertyRef Name="idTipoEntrega" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DeliverEatEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Compras" EntityType="Self.Compra" />
+          <EntitySet Name="DetalleCompras" EntityType="Self.DetalleCompra" />
+          <EntitySet Name="Entregas" EntityType="Self.Entrega" />
+          <EntitySet Name="PagoPedidoes" EntityType="Self.PagoPedido" />
+          <EntitySet Name="TipoEntregas" EntityType="Self.TipoEntrega" />
+          <EntitySet Name="TipoPagoes" EntityType="Self.TipoPago" />
+          <AssociationSet Name="FK" Association="Self.FK">
+            <End Role="Compras" EntitySet="Compras" />
+            <End Role="DetalleCompra" EntitySet="DetalleCompras" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Compras" Association="Self.FK_Compras">
+            <End Role="Compras" EntitySet="Compras" />
+            <End Role="Entregas" EntitySet="Entregas" />
+          </AssociationSet>
+          <AssociationSet Name="FK312312312323" Association="Self.FK312312312323">
+            <End Role="Compras" EntitySet="Compras" />
+            <End Role="Entregas" EntitySet="Entregas" />
+          </AssociationSet>
+          <AssociationSet Name="FK321323" Association="Self.FK321323">
+            <End Role="Compras" EntitySet="Compras" />
+            <End Role="PagoPedido" EntitySet="PagoPedidoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EntregasTipoEntregas" Association="Self.FK_EntregasTipoEntregas">
+            <End Role="TipoEntrega" EntitySet="TipoEntregas" />
+            <End Role="Entregas" EntitySet="Entregas" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DeliverEatModelStoreContainer" CdmEntityContainer="DeliverEatEntities">
+          <EntitySetMapping Name="Compras">
+            <EntityTypeMapping TypeName="DeliverEatModel.Compra">
+              <MappingFragment StoreEntitySet="Compras">
+                <ScalarProperty Name="idPedido" ColumnName="idPedido" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="fechaHora" ColumnName="fechaHora" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="apellido" ColumnName="apellido" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="barrio" ColumnName="barrio" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+                <ScalarProperty Name="numero" ColumnName="numero" />
+                <ScalarProperty Name="depto" ColumnName="depto" />
+                <ScalarProperty Name="piso" ColumnName="piso" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DetalleCompras">
+            <EntityTypeMapping TypeName="DeliverEatModel.DetalleCompra">
+              <MappingFragment StoreEntitySet="DetalleCompra">
+                <ScalarProperty Name="idPedido" ColumnName="idPedido" />
+                <ScalarProperty Name="idProducto" ColumnName="idProducto" />
+                <ScalarProperty Name="idComercio" ColumnName="idComercio" />
+                <ScalarProperty Name="precioUnitario" ColumnName="precioUnitario" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Entregas">
+            <EntityTypeMapping TypeName="DeliverEatModel.Entrega">
+              <MappingFragment StoreEntitySet="Entregas">
+                <ScalarProperty Name="idPedido" ColumnName="idPedido" />
+                <ScalarProperty Name="idTipoEntrega" ColumnName="idTipoEntrega" />
+                <ScalarProperty Name="horaEntrega" ColumnName="horaEntrega" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PagoPedidoes">
+            <EntityTypeMapping TypeName="DeliverEatModel.PagoPedido">
+              <MappingFragment StoreEntitySet="PagoPedido">
+                <ScalarProperty Name="idTipoPago" ColumnName="idTipoPago" />
+                <ScalarProperty Name="idPedido" ColumnName="idPedido" />
+                <ScalarProperty Name="monto" ColumnName="monto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoEntregas">
+            <EntityTypeMapping TypeName="DeliverEatModel.TipoEntrega">
+              <MappingFragment StoreEntitySet="TipoEntrega">
+                <ScalarProperty Name="idTipoEntrega" ColumnName="idTipoEntrega" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoPagoes">
+            <EntityTypeMapping TypeName="DeliverEatModel.TipoPago">
+              <MappingFragment StoreEntitySet="TipoPago">
+                <ScalarProperty Name="idTipoPago" ColumnName="idTipoPago" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
